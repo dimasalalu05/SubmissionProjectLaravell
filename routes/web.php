@@ -5,6 +5,8 @@ use App\Http\Controllers\ProdukController;
 use App\Http\Controllers\MahasiswaController;
 use App\Http\Controllers\daftarBuku;
 use App\Http\Controllers\JurusanController;
+use App\Http\Controllers\MatakuliahController;
+use GuzzleHttp\Promise\Create;
 
 // 3.1 Route Sederhana (Closure)
 Route::get('/', function () {
@@ -73,41 +75,14 @@ Route::get('/daftar', [MahasiswaController::class, 'daftar'])->name('mahasiswa.m
 Route::get('/mahasiswa/{nim}', [MahasiswaController::class, 'show'])->name('mahasiswa.detail');
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 // Pertemuan 6
 Route::get('/jurusan', [JurusanController::class, 'index'])->name('jurusan.index');
 Route::get('/jurusan/create', [JurusanController::class, 'create'])->name('jurusan.create');
 Route::get('/jurusan/{id}', [JurusanController::class, 'show']);
 Route::post('/jurusan/store', [JurusanController::class, 'store'])->name('jurusan.store');
+
+// Tugas Pertemuan 6
+Route::get('/matakuliah', [MatakuliahController::class, 'index'])->name('matakuliah.index');
+Route::get('/matakuliah/create', [MatakuliahController::class, 'create'])->name('matakuliah.create');
+Route::get('/matakuliah/{matakuliah}', [MatakuliahController::class, 'show'])->name('matakuliah.show');
+Route::post('/matakuliah/store', [MatakuliahController::class, 'store'])->name('matakuliah.store');

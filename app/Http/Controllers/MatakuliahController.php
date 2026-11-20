@@ -2,9 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Jurusan;
-use App\Models\Matakuliah;
 use Illuminate\Http\Request;
+use App\Models\Matakuliah;
 
 class MatakuliahController extends Controller
 {
@@ -13,8 +12,8 @@ class MatakuliahController extends Controller
      */
     public function index()
     {
-        $matakuliah = Matakuliah::all();
-        return view('matakuliah.index', compact('matakuliah'));
+        $matakuliahs = Matakuliah::all();
+        return view('matakuliah.index', compact('matakuliahs'));
     }
 
     /**
@@ -28,42 +27,31 @@ class MatakuliahController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function store(Request $request)
-    // {
-    //     $request->validate([
-    //     'kode_matakuliah' => 'required|string|unique'])
-    // }
+    public function store(Request $request)
+    {
+        $request->validate([
+            'kode_matakuliah' => 'required|string|unique:matakuliahs,kode_matakuliah',
+
+            'nama_matakuliah' => 'required|string',
+
+            'sks' => 'required|integer|between:1,2'
+        ]);
+
+        Matakuliah::create([
+            'kode_matakuliah' => $request->kode_matakuliah,
+            'nama_matakuliah' => $request->nama_matakuliah,
+            'sks' => $request->sks
+
+        ]);
+
+        return redirect()->route('matakuliah.index')->with('success', 'Data Matakuliah Berhasil Ditambahkan');
+    }
 
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(Matakuliah $matakuliah)
     {
-        $matakuliah = Matakuliah::findOrFail($id);
         return view('matakuliah.show', compact('matakuliah'));
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }
